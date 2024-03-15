@@ -1,10 +1,11 @@
 import './App.css';
 import './Assests/fontAwesomeProIcons/fontAwesomeIcons.css';
+import BankOfReact from './Components/BankOfReact';
 
 function App() {
   return (
     <div>
-      Our React App, is up and running!
+     <BankOfReact />
     </div>
 
   );
