@@ -1,6 +1,13 @@
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import MUISlider from '@mui/material/Slider';
+import {useState} from 'react';
+
+
 export default function Slider({stateBankOfReact, id, dispatch}){
 // testing input
-  console.log(stateBankOfReact, id);
+  // console.log(stateBankOfReact, id);
+let [silderCurrentValue, updateSliderCurrentValue] = useState(stateBankOfReact[id].current);
 
 // helper functions
   // to convert currency into lakhs and crores
@@ -18,21 +25,38 @@ export default function Slider({stateBankOfReact, id, dispatch}){
 
 // Returning JSX
   return (  
-    <div  className="w-[50rem]" >
+    <div  className="w-[20rem]" >
       <label 
         htmlFor={stateBankOfReact[id]} 
         className="font-semibold text-[1.8rem]"        
       >
-        Home Value<br/>{convertCurrencyIntoLakhsCrores(stateBankOfReact[id].current)}
+        {stateBankOfReact[id].name}<br/>{convertCurrencyIntoLakhsCrores(stateBankOfReact[id].current)}
       </label>
-      <input onChange={(e)=>{
-        dispatch({request:'updateValue', id:stateBankOfReact[id], newCurrentValue:e.target.value})
-      }}
-      className="w-[100%]" type="range" id={stateBankOfReact[id]} min={stateBankOfReact[id].min} max={stateBankOfReact[id].max} defaultValue={stateBankOfReact[id].current} />
+
+
+      <Box sx={{ width: 300 }}>
+        <MUISlider
+          aria-label="Small steps"
+          defaultValue={silderCurrentValue}
+          step={(stateBankOfReact[id].max-stateBankOfReact[id].min)/10}
+          marks
+          min={stateBankOfReact[id].min}
+          getAriaValueText={convertCurrencyIntoLakhsCrores}
+          max={stateBankOfReact[id].max}
+          valueLabelDisplay="auto"
+          onChange={(e)=>{
+            dispatch({request:'updateValue', id:id, newCurrentValue:e.target.value})
+          }}
+          id={stateBankOfReact[id]}
+          
+        />
+      </Box>
+
+
 
       <div className="flex justify-between text-gray-300 italic ">
-        <span>{convertCurrencyIntoLakhsCrores(stateBankOfReact[id].min)}</span>
-        <span>{convertCurrencyIntoLakhsCrores(stateBankOfReact[id].max)}</span>
+        <span>{stateBankOfReact[id].min < 1000000 ? stateBankOfReact[id].min : convertCurrencyIntoLakhsCrores(stateBankOfReact[id].min)}</span>
+        <span>{stateBankOfReact[id].max < 1000000 ? stateBankOfReact[id].max : convertCurrencyIntoLakhsCrores(stateBankOfReact[id].max)}</span>
       </div>
     </div>
     
