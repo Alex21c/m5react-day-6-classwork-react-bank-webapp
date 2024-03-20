@@ -4,7 +4,7 @@ import MUISlider from '@mui/material/Slider';
 import {useState} from 'react';
 
 
-export default function Slider({stateBankOfReact, id, dispatch}){
+export default function SliderInterestRate({stateBankOfReact, id, dispatch}){
 // testing input
   // //console.log(stateBankOfReact, id);
 let [silderCurrentValue, updateSliderCurrentValue] = useState(stateBankOfReact[id].current);
@@ -19,8 +19,9 @@ let [silderCurrentValue, updateSliderCurrentValue] = useState(stateBankOfReact[i
     }else if(currency >= 10000000){
       formattedCurrency = currency/10000000;
       formattedCurrency = `₹ ${formattedCurrency} ${formattedCurrency >1 ? 'Crores' : 'Crore'}`;
-    }else{
-      formattedCurrency = `₹ ${currency}`;
+    }else {
+      
+      formattedCurrency = `₹ 0 `;
     }
     return formattedCurrency;
   }
@@ -28,19 +29,19 @@ let [silderCurrentValue, updateSliderCurrentValue] = useState(stateBankOfReact[i
 // Returning JSX
   return (  
     <div  className="w-[20rem]" >
-      <label 
+      <label  
         htmlFor={stateBankOfReact[id]} 
-        className=" labelSlider font-semibold text-[1.8rem]"        
+        className="labelSlider font-semibold text-[1.8rem]"        
       >
-        {stateBankOfReact[id].name}<br/><span className='font-normal'>{convertCurrencyIntoLakhsCrores(stateBankOfReact[id].current)}</span>
+        {stateBankOfReact[id].name}<br/>{stateBankOfReact[id].current}%
       </label>
 
 
-      <Box className='sliderBox w-[20rem]'>
+      <Box className='sliderBox w-[20rem]' >
         <MUISlider
           aria-label="Small steps"
           defaultValue={silderCurrentValue}
-          step={(stateBankOfReact[id].max-stateBankOfReact[id].min)/10 <= 0 ? 1 : Math.floor(stateBankOfReact[id].max-stateBankOfReact[id].min)/10}
+          step={(stateBankOfReact[id].max-stateBankOfReact[id].min)/10}
           marks
           min={stateBankOfReact[id].min}
           getAriaValueText={convertCurrencyIntoLakhsCrores}
@@ -56,7 +57,7 @@ let [silderCurrentValue, updateSliderCurrentValue] = useState(stateBankOfReact[i
 
 
 
-      <div className="flex justify-between text-gray-300 italic spansRangeLabels">
+      <div className="flex justify-between text-gray-300 italic spansRangeLabels ">
         <span>{stateBankOfReact[id].min < 1000000 ? stateBankOfReact[id].min : convertCurrencyIntoLakhsCrores(stateBankOfReact[id].min)}</span>
         <span>{stateBankOfReact[id].max < 1000000 ? stateBankOfReact[id].max : convertCurrencyIntoLakhsCrores(stateBankOfReact[id].max)}</span>
       </div>
